@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <style>
+      main {
+        background-image: linear-gradient(
+          to right,
+          rgba(55, 91, 105, 0.418),
+          rgba(255, 192, 203, 0.445),
+          rgba(172, 101, 101, 0.452),
+          rgba(88, 48, 48, 0.452),
+          rgba(71, 56, 56, 0.459),
+          rgba(65, 92, 102, 0.356),
+          rgba(135, 121, 124, 0.445)
+        );
+      }
+
+      /* Fussball Animation */
+      .fußball {
+        animation: fußball 5s linear 0s infinite normal forwards;
+        border-radius: 50%;
+        margin: 50px;
+      }
+      @keyframes fußball {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Basketball Animation */
+      .basketball {
+        animation: basketball 10s linear 0s infinite;
+      }
+      @keyframes basketball {
+        0% {
+          transform: translateX(0px);
+        }
+        50% {
+          transform: translateX(200px);
+        }
+        100% {
+          transform: translateX(0px);
+        }
+      }
+
+      /* Tennisball Animation */
+      .tennisball {
+        animation: tennisball 5s linear 0s infinite normal forwards;
+        border-radius: 50%;
+        margin: 50px;
+      }
+      @keyframes tennisball {
+        0%,
+        100% {
+          transform: translateY(0) translateX(0);
+        }
+
+        30% {
+          transform: translateY(70px) translateX(90px);
+        }
+
+        60% {
+          transform: translateY(0px) translateX(0px);
+        }
+
+        80% {
+          transform: translateY(70px) translateX(90px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="ausgabe" class="ball-container"></main>
+    <script>
+      class Ball {
+        constructor(ziel) {
+          this._ziel = ziel;
+          this._groesse = 0;
+          this._farbe = "";
+          this._art = "";
+          this._bild = "";
+          this._animation = "";
+        }
+        set groesse(wert) {
+          if (typeof wert === "number") this._groesse = wert;
+        }
+
+        get groesse() {
+          return this._groesse;
+        }
+
+        set farbe(wert) {
+          if (typeof wert === "string") this._farbe = wert;
+        }
+
+        get farbe() {
+          return this._farbe;
+        }
+
+        set art(wert) {
+          if (typeof wert === "string") this._art = wert;
+        }
+
+        get art() {
+          return this._art;
+        }
+
+        set bild(wert) {
+          if (typeof wert === "string") this._bild = wert;
+        }
+
+        get bild() {
+          return this._bild;
+        }
+
+        set animation(wert) {
+          if (typeof wert === "string") this._animation = wert;
+        }
+
+        get animation() {
+          return this._animation;
+        }
+        erzeugen() {
+          const container = document.getElementById(this._ziel);
+          const ballContainer = document.createElement("div");
+          ballContainer.classList.add("ball-container");
+
+          const ballElement = document.createElement("div");
+          ballElement.style.width = this._groesse + "px";
+          ballElement.style.height = this._groesse + "px";
+          ballElement.style.backgroundColor = this._farbe;
+          ballElement.style.backgroundImage = `url(${this._bild})`;
+          ballElement.style.backgroundSize = "cover";
+          ballElement.style.backgroundPosition = "center";
+          ballElement.classList.add(this._animation);
+
+          const ballText = document.createElement("p");
+          ballText.textContent = this._art;
+
+          ballContainer.appendChild(ballElement);
+          ballContainer.appendChild(ballText);
+
+          container.appendChild(ballContainer);
+        }
+
+        beschleunigung(wert) {}
+
+        drehmoment(wert) {}
+      }
+
+      const ball1 = new Ball("ausgabe");
+      ball1.groesse = 100;
+      ball1.farbe = "green";
+      ball1.art = "Fußball";
+      ball1.bild =
+        "https://thumbs.dreamstime.com/b/soccer-ball-form-moon-isolated-23884566.jpg";
+      ball1.animation = "fußball";
+      ball1.erzeugen();
+
+      const ball2 = new Ball("ausgabe");
+      ball2.groesse = 120;
+      ball2.farbe = "orange";
+      ball2.art = "Basketball";
+      ball2.bild =
+        "https://cdn.w600.comps.canstockphoto.com/basketball-spherical-inflated-leather-eps-vector_csp47202288.jpg";
+      ball2.animation = "basketball";
+      ball2.erzeugen();
+
+      const ball3 = new Ball("ausgabe");
+      ball3.groesse = 30;
+      ball3.farbe = "yellow";
+      ball3.art = "Tennisball";
+      ball3.bild =
+        "https://www.clipartkey.com/mpngs/m/221-2211897_tennis-ball-png-images-tennis-ball-drawing-png.png";
+      ball3.animation = "tennisball";
+      ball3.erzeugen();
+    </script>
+  </body>
+</html>
